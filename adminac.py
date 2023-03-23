@@ -1,0 +1,40 @@
+from tkinter import * 
+import sqlite3
+root= Tk()
+root.state("zoomed")
+conn =sqlite3.connect('cracc.db')
+c= conn.cursor()
+c.execute('''create table if not exists adminlg (uid real , mail real , mob integer, pswd real) ''')
+conn.commit()
+conn.close()
+
+#inserting data 
+user= StringVar()
+ml= StringVar()
+mb= StringVar()
+psw= StringVar()
+
+def data():
+    conn= sqlite3.connect('cracc.db')
+    c= conn.cursor()
+    c.execute("insert into adminlg values ('%s', '%s','%s','%s')"%(user.get(),ml.get(),mb.get(),psw.get()))
+    c.close()
+    conn.commit()
+    conn.close()
+bg= PhotoImage(file='usrimg/adminca.png')
+bgplace =Label(root,image=bg).place(x=0,y=-250)
+e1= Entry(root,font=('monospace',18),textvariable=user,border=0,width=30)
+e1.place(x=528,y=278)
+e2= Entry(root,font=('monospace',18),border=0,textvariable=ml,width=30)
+e2.place(x=528,y=350)
+e3= Entry(root,font=('monospace',18),border=0,textvariable=mb,width=30)
+e3.place(x=528,y=427)
+e4= Entry(root,font=('monospace',18),border=0,textvariable=psw,width=30)
+e4.place(x=528,y=505)
+b= Button(root,text='Register',border=0,bg='#007DFE',activebackground='#007DFE',activeforeground='black',fg='white',font=('monospace',22),command=data,width=20).place(x=565,y=612)
+e1.insert(0,'Unique Id')
+e2.insert(0,'E-mail')
+e3.insert(0,'Mobile Number')
+e4.insert(0,'Password')
+
+root.mainloop()
